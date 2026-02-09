@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Study Help & Tutoring – Book an Appointment</title>
+  <title>Study Help & Tutoring – Book & Pay</title>
   <style>
     body { font-family: Arial, sans-serif; margin: 0; background: #f6f7fb; color: #222; }
     header { background: #111; color: #fff; padding: 20px; text-align: center; }
@@ -16,7 +16,9 @@
     label { display: block; margin-top: 10px; }
     input, select, textarea, button { width: 100%; padding: 10px; margin-top: 5px; border-radius: 6px; border: 1px solid #ccc; }
     button { background: #111; color: #fff; cursor: pointer; margin-top: 15px; }
-    button:hover { background: #333; }
+    button[disabled] { background:#888; cursor:not-allowed; }
+    .pay-btn { display:block; text-align:center; padding:12px; background:#ffcc00; color:#000; border-radius:8px; font-weight:bold; text-decoration:none; margin-top:10px; }
+    .note { font-size:14px; color:#555; }
     footer { text-align: center; padding: 15px; font-size: 14px; color: #666; }
   </style>
 </head>
@@ -27,36 +29,56 @@
   </header>
 
   <main>
+    <!-- SERVICES -->
     <div class="card">
       <h2>Services & Pricing</h2>
       <div class="services">
         <div class="service">
-          <h3>Normal Assignment (Non‑Practical)</h3>
+          <h3>Normal Assignment (Non-Practical)</h3>
           <p>Concept explanation, structure, review & correction.</p>
-          <p class="price">GHS 20</p>
+          <p class="price">GHS 70</p>
         </div>
         <div class="service">
           <h3>Practical Assignment</h3>
-          <p>Hands‑on guidance with tools, labs & demonstrations.</p>
-          <p class="price">GHS 25</p>
+          <p>Hands-on guidance with tools, labs & demonstrations.</p>
+          <p class="price">GHS 150</p>
         </div>
         <div class="service">
           <h3>Project / Coursework Coaching</h3>
-          <p>Long‑term support until submission.</p>
-          <p class="price">From GHS 70</p>
+          <p>Long-term support until submission.</p>
+          <p class="price">From GHS 300</p>
         </div>
       </div>
     </div>
 
+    <!-- PAYMENT -->
     <div class="card">
-      <h2>Payment Method</h2>
-      <p><strong>Accepted Payment:</strong> MTN Mobile Money (MoMo)</p>
-      <p>After booking, please make payment using the button below. Once payment is completed, you will be redirected to WhatsApp to confirm your booking.</p>
-      <a href="https://paystack.com/pay/your-payment-link" target="_blank" style="display:block;text-align:center;padding:12px;background:#ffcc00;color:#000;border-radius:8px;font-weight:bold;text-decoration:none;">Pay with MTN MoMo</a>
+      <h2>Payment (Required Before Booking)</h2>
+      <p><strong>Accepted:</strong> MTN Mobile Money (MoMo)</p>
+
+      <label>Select Service (auto-sets amount)
+        <select id="serviceSelect" onchange="setPaymentLink()" required>
+          <option value="">Choose service</option>
+          <option value="normal">Normal Assignment – GHS 70</option>
+          <option value="practical">Practical Assignment – GHS 150</option>
+          <option value="project">Project / Coursework – From GHS 300</option>
+        </select>
+      </label>
+
+      <!-- Replace these Paystack links with YOUR real links -->
+      <a id="payBtn" class="pay-btn" href="#" target="_blank" onclick="markPaid(event)">Pay with MTN MoMo</a>
+
+      <p class="note">After successful payment, copy the <strong>payment reference</strong> and return here to confirm.</p>
+
+      <hr />
+      <p class="note"><strong>Fallback (if gateway fails):</strong></p>
+      <p class="note">MTN MoMo Number: <strong>024XXXXXXX</strong><br/>Name: <strong>Your Name</strong></p>
+      <p class="note">Send payment screenshot + reference on WhatsApp.</p>
     </div>
 
+    <!-- BOOKING -->
     <div class="card">
-      <h2>Book an Appointment</h2>
+      <h2>Confirm Booking (Payment First)</h2>
       <form onsubmit="sendToWhatsApp(event)">
         <label>Full Name
           <input type="text" id="name" required />
@@ -72,16 +94,21 @@
             <option value="">Select one</option>
             <option>Normal (Non-Practical)</option>
             <option>Practical</option>
+            <option>Project / Coursework</option>
           </select>
         </label>
         <label>Preferred Date
           <input type="date" id="date" required />
         </label>
+        <label>Payment Reference (from MoMo/Paystack)
+          <input type="text" id="reference" placeholder="e.g. PSK_123ABC" required />
+        </label>
         <label>Details
           <textarea id="details" rows="4" required></textarea>
         </label>
-        <button type="submit">Confirm via WhatsApp</button>
+        <button id="confirmBtn" type="submit" disabled>Confirm via WhatsApp</button>
       </form>
+      <p class="note">Button unlocks after you click the payment button.</p>
     </div>
   </main>
 
@@ -90,28 +117,52 @@
   </footer>
 
   <script>
+    // 1) AUTO-SELECT PAYMENT LINK BY SERVICE
+    function setPaymentLink() {
+      const s = document.getElementById('serviceSelect').value;
+      const payBtn = document.getElementById('payBtn');
+      // TODO: Replace these with YOUR real Paystack links
+      const links = {
+        normal: 'https://paystack.com/pay/YOUR_NORMAL_LINK',
+        practical: 'https://paystack.com/pay/YOUR_PRACTICAL_LINK',
+        project: 'https://paystack.com/pay/YOUR_PROJECT_LINK'
+      };
+      payBtn.href = links[s] || '#';
+    }
+
+    // 2) FORCE PAYMENT BEFORE WHATSAPP (client-side gate)
+    function markPaid(e) {
+      if (document.getElementById('payBtn').href === '#') {
+        e.preventDefault();
+        alert('Please select a service first.');
+        return;
+      }
+      localStorage.setItem('paidClicked', 'yes');
+      setTimeout(() => {
+        document.getElementById('confirmBtn').disabled = false;
+      }, 1000);
+    }
+
+    // 3) SEND WHATSAPP WITH PAYMENT REFERENCE
     function sendToWhatsApp(e) {
       e.preventDefault();
-
+      if (localStorage.getItem('paidClicked') !== 'yes') {
+        alert('Please complete payment first.');
+        return;
+      }
       const name = document.getElementById('name').value;
       const contact = document.getElementById('contact').value;
       const course = document.getElementById('course').value;
       const type = document.getElementById('type').value;
       const date = document.getElementById('date').value;
+      const ref = document.getElementById('reference').value;
       const details = document.getElementById('details').value;
-
-      const phoneNumber = '233550520858'; // replace with your WhatsApp number
-
-      const message = `Hello, I want to book an appointment.%0A%0A` +
-        `Name: ${name}%0A` +
-        `Contact: ${contact}%0A` +
-        `Course: ${course}%0A` +
-        `Assignment Type: ${type}%0A` +
-        `Preferred Date: ${date}%0A` +
-        `Details: ${details}`;
-
-      const url = `https://wa.me/${phoneNumber}?text=${message}`;
-      window.open(url, '_blank');
+      const phoneNumber = '233XXXXXXXXX'; // YOUR WhatsApp number
+      const msg = `Hello, I have PAID and want to confirm a booking.%0A%0A` +
+        `Name: ${name}%0AContact: ${contact}%0ACourse: ${course}%0A` +
+        `Assignment Type: ${type}%0APreferred Date: ${date}%0A` +
+        `Payment Reference: ${ref}%0A%0ADetails: ${details}`;
+      window.open(`https://wa.me/${phoneNumber}?text=${msg}`, '_blank');
     }
   </script>
 </body>
