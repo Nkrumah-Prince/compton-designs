@@ -1,169 +1,212 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Study Help & Tutoring – Book & Pay</title>
-  <style>
-    body { font-family: Arial, sans-serif; margin: 0; background: #f6f7fb; color: #222; }
-    header { background: #111; color: #fff; padding: 20px; text-align: center; }
-    main { max-width: 900px; margin: auto; padding: 20px; }
-    .card { background: #fff; border-radius: 10px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
-    h2 { margin-top: 0; }
-    .services { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; }
-    .service { border: 1px solid #ddd; border-radius: 8px; padding: 15px; }
-    .price { font-weight: bold; color: #0a7; }
-    label { display: block; margin-top: 10px; }
-    input, select, textarea, button { width: 100%; padding: 10px; margin-top: 5px; border-radius: 6px; border: 1px solid #ccc; }
-    button { background: #111; color: #fff; cursor: pointer; margin-top: 15px; }
-    button[disabled] { background:#888; cursor:not-allowed; }
-    .pay-btn { display:block; text-align:center; padding:12px; background:#ffcc00; color:#000; border-radius:8px; font-weight:bold; text-decoration:none; margin-top:10px; }
-    .note { font-size:14px; color:#555; }
-    footer { text-align: center; padding: 15px; font-size: 14px; color: #666; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pro Study Help & Assignment Booking</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  /* BASE RESET */
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Roboto', sans-serif; }
+  body { background: #f4f7fd; color: #333; scroll-behavior: smooth; }
+  a { text-decoration: none; color: inherit; }
+
+  /* HEADER */
+  header { background: linear-gradient(135deg,#6a11cb,#2575fc); color: #fff; padding: 60px 20px; text-align:center; }
+  header h1 { font-size: 3rem; margin-bottom: 10px; animation: fadeInDown 1s ease; }
+  header p { font-size: 1.3rem; opacity:0.9; animation: fadeInUp 1s ease; }
+
+  @keyframes fadeInDown { from{opacity:0; transform:translateY(-30px);} to{opacity:1; transform:translateY(0);} }
+  @keyframes fadeInUp { from{opacity:0; transform:translateY(30px);} to{opacity:1; transform:translateY(0);} }
+
+  main { max-width: 1100px; margin: 50px auto; padding: 0 20px; }
+
+  /* SERVICE CARDS */
+  .card { background:#fff; border-radius:25px; padding:35px; margin-bottom:50px; box-shadow:0 12px 30px rgba(0,0,0,0.12); transition: all 0.3s ease; }
+  .card:hover { transform: translateY(-7px); }
+  h2 { margin-bottom:30px; color:#6a11cb; font-size:2rem; text-align:center; }
+
+  .services { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:30px; }
+  .service { border-radius:18px; padding:30px; background:linear-gradient(145deg,#fdfbfb,#ebedee); border-left:10px solid #6a11cb; cursor:pointer; transition:all 0.3s ease; position:relative; overflow:hidden; }
+  .service:hover { box-shadow:0 10px 30px rgba(0,0,0,0.18); }
+  .service i { font-size:2rem; color:#6a11cb; margin-bottom:15px; display:block; }
+  .service h3 { font-size:1.4rem; margin-bottom:10px; color:#333; }
+  .service p { font-size:1rem; opacity:0.85; margin-bottom:15px; }
+  .price { font-weight:bold; font-size:1.5rem; color:#ff5722; }
+  .tooltip { position:absolute; bottom:15px; right:15px; background:#6a11cb; color:#fff; padding:6px 10px; border-radius:6px; font-size:0.85rem; opacity:0; transition:opacity 0.3s; pointer-events:none; }
+  .service:hover .tooltip { opacity:1; }
+
+  /* PAYMENT BUTTON */
+  .pay-btn { display:block; text-align:center; padding:18px; background:#ffcc00; color:#000; border-radius:15px; font-weight:bold; margin-top:20px; font-size:1.1rem; transition:all 0.3s ease; }
+  .pay-btn:hover { background:#e6b800; transform:scale(1.05); }
+
+  /* FORM STYLING */
+  form label { display:block; margin-top:18px; font-weight:500; }
+  input, select, textarea, button { width:100%; padding:15px; margin-top:6px; border-radius:10px; border:1px solid #ccc; font-size:1rem; transition:border-color 0.3s; }
+  input:focus, select:focus, textarea:focus { border-color:#6a11cb; outline:none; }
+  textarea { resize:vertical; }
+  button { background:#6a11cb; color:#fff; font-weight:bold; cursor:pointer; border:none; transition:all 0.3s; font-size:1.1rem; }
+  button:hover { background:#2575fc; transform:scale(1.02); }
+  button[disabled] { background:#888; cursor:not-allowed; }
+  .note { font-size:0.9rem; color:#555; margin-top:8px; }
+
+  /* FOOTER */
+  footer { text-align:center; padding:30px; font-size:0.9rem; color:#777; margin-top:60px; }
+
+  /* RESPONSIVE */
+  @media(max-width:600px){
+    header h1{font-size:2rem;}
+    header p{font-size:1rem;}
+    .service h3{font-size:1.1rem;}
+    .price{font-size:1.2rem;}
+  }
+</style>
 </head>
 <body>
-  <header>
-    <h1>Study Help & Assignment Support</h1>
-    <p>Guidance, tutoring & practical coaching</p>
-  </header>
 
-  <main>
-    <!-- SERVICES -->
-    <div class="card">
-      <h2>Services & Pricing</h2>
-      <div class="services">
-        <div class="service">
-          <h3>Normal Assignment (Non-Practical)</h3>
-          <p>Concept explanation, structure, review & correction.</p>
-          <p class="price">GHS 70</p>
-        </div>
-        <div class="service">
-          <h3>Practical Assignment</h3>
-          <p>Hands-on guidance with tools, labs & demonstrations.</p>
-          <p class="price">GHS 150</p>
-        </div>
-        <div class="service">
-          <h3>Project / Coursework Coaching</h3>
-          <p>Long-term support until submission.</p>
-          <p class="price">From GHS 300</p>
-        </div>
+<header>
+  <h1>Pro Study Help & Assignment Booking</h1>
+  <p>Your ultimate solution for assignments, practicals, and projects</p>
+</header>
+
+<main>
+  <!-- SERVICES -->
+  <div class="card">
+    <h2>Our Services & Pricing</h2>
+    <div class="services">
+      <div class="service" onclick="selectService('normal')">
+        <i class="fas fa-book"></i>
+        <h3>Normal Assignment</h3>
+        <p>Complete guidance, review, and corrections for written assignments.</p>
+        <p class="price">GHS 20</p>
+        <div class="tooltip">Click to select this service</div>
+      </div>
+      <div class="service" onclick="selectService('practical')">
+        <i class="fas fa-flask"></i>
+        <h3>Practical Assignment</h3>
+        <p>Hands-on support for labs, software, and practical tasks.</p>
+        <p class="price">GHS 25</p>
+        <div class="tooltip">Click to select this service</div>
+      </div>
+      <div class="service" onclick="selectService('project')">
+        <i class="fas fa-tasks"></i>
+        <h3>Project / Coursework</h3>
+        <p>Step-by-step guidance from start to submission.</p>
+        <p class="price">GHS 70</p>
+        <div class="tooltip">Click to select this service</div>
       </div>
     </div>
+  </div>
 
-    <!-- PAYMENT -->
-    <div class="card">
-      <h2>Payment (Required Before Booking)</h2>
-      <p><strong>Accepted:</strong> MTN Mobile Money (MoMo)</p>
+  <!-- PAYMENT -->
+  <div class="card">
+    <h2>Payment (Required Before Booking)</h2>
+    <p><strong>Accepted:</strong> MTN Mobile Money via Moolre</p>
 
-      <label>Select Service (auto-sets amount)
-        <select id="serviceSelect" onchange="setPaymentLink()" required>
-          <option value="">Choose service</option>
-          <option value="normal">Normal Assignment – GHS 70</option>
-          <option value="practical">Practical Assignment – GHS 150</option>
-          <option value="project">Project / Coursework – From GHS 300</option>
+    <label>Select Service
+      <select id="serviceSelect" onchange="setPaymentLink()" required>
+        <option value="">Choose a service</option>
+        <option value="normal">Normal Assignment – GHS 20</option>
+        <option value="practical">Practical Assignment – GHS 25</option>
+        <option value="project">Project / Coursework – GHS 70</option>
+      </select>
+    </label>
+
+    <a id="payBtn" class="pay-btn" href="#" target="_blank" onclick="markPaid(event)">Pay with MTN MoMo</a>
+    <p class="note">After payment, copy your <strong>payment reference</strong> below to confirm booking.</p>
+  </div>
+
+  <!-- BOOKING FORM -->
+  <div class="card">
+    <h2>Confirm Booking</h2>
+    <form onsubmit="sendToWhatsApp(event)">
+      <label>Full Name
+        <input type="text" id="name" placeholder="Your full name" required>
+      </label>
+      <label>Email or WhatsApp Number
+        <input type="text" id="contact" placeholder="e.g. 024xxxxxxx" required>
+      </label>
+      <label>Course
+        <input type="text" id="course" placeholder="Course name" required>
+      </label>
+      <label>Assignment Type
+        <select id="type" required>
+          <option value="">Select type</option>
+          <option>Normal (Non-Practical)</option>
+          <option>Practical</option>
+          <option>Project / Coursework</option>
         </select>
       </label>
+      <label>Preferred Date
+        <input type="date" id="date" required>
+      </label>
+      <label>Payment Reference
+        <input type="text" id="reference" placeholder="Enter payment reference" required>
+      </label>
+      <label>Additional Details
+        <textarea id="details" rows="4" placeholder="Any specific instructions"></textarea>
+      </label>
+      <button id="confirmBtn" type="submit" disabled>Confirm via WhatsApp</button>
+      <p class="note">Button will unlock after clicking the payment button.</p>
+    </form>
+  </div>
+</main>
 
-      <!-- Replace these Paystack links with YOUR real links -->
-      <a id="payBtn" class="pay-btn" href="#" target="_blank" onclick="markPaid(event)">Pay with MTN MoMo</a>
+<footer>
+  <p>© 2026 Pro Study Help • Professional Guidance & Tutoring</p>
+</footer>
 
-      <p class="note">After successful payment, copy the <strong>payment reference</strong> and return here to confirm.</p>
+<script>
+  function selectService(service){
+    document.getElementById('serviceSelect').value = service;
+    setPaymentLink();
+    document.getElementById('payBtn').scrollIntoView({behavior:'smooth'});
+  }
 
-      <hr />
-      <p class="note"><strong>Fallback (if gateway fails):</strong></p>
-      <p class="note">MTN MoMo Number: <strong>024XXXXXXX</strong><br/>Name: <strong>Your Name</strong></p>
-      <p class="note">Send payment screenshot + reference on WhatsApp.</p>
-    </div>
+  function setPaymentLink() {
+    const service = document.getElementById('serviceSelect').value;
+    const payBtn = document.getElementById('payBtn');
+    const links = {
+      normal:'https://moolre.com/pay/NORMAL123',
+      practical:'https://moolre.com/pay/PRACTICAL456',
+      project:'https://moolre.com/pay/PROJECT789'
+    };
+    payBtn.href = links[service]||'#';
+  }
 
-    <!-- BOOKING -->
-    <div class="card">
-      <h2>Confirm Booking (Payment First)</h2>
-      <form onsubmit="sendToWhatsApp(event)">
-        <label>Full Name
-          <input type="text" id="name" required />
-        </label>
-        <label>Email or WhatsApp Number
-          <input type="text" id="contact" required />
-        </label>
-        <label>Course
-          <input type="text" id="course" required />
-        </label>
-        <label>Assignment Type
-          <select id="type" required>
-            <option value="">Select one</option>
-            <option>Normal (Non-Practical)</option>
-            <option>Practical</option>
-            <option>Project / Coursework</option>
-          </select>
-        </label>
-        <label>Preferred Date
-          <input type="date" id="date" required />
-        </label>
-        <label>Payment Reference (from MoMo/Paystack)
-          <input type="text" id="reference" placeholder="e.g. PSK_123ABC" required />
-        </label>
-        <label>Details
-          <textarea id="details" rows="4" required></textarea>
-        </label>
-        <button id="confirmBtn" type="submit" disabled>Confirm via WhatsApp</button>
-      </form>
-      <p class="note">Button unlocks after you click the payment button.</p>
-    </div>
-  </main>
-
-  <footer>
-    <p>© 2026 Study Help Service • Guidance & Tutoring Only</p>
-  </footer>
-
-  <script>
-    // 1) AUTO-SELECT PAYMENT LINK BY SERVICE
-    function setPaymentLink() {
-      const s = document.getElementById('serviceSelect').value;
-      const payBtn = document.getElementById('payBtn');
-      // TODO: Replace these with YOUR real Paystack links
-      const links = {
-        normal: 'https://paystack.com/pay/YOUR_NORMAL_LINK',
-        practical: 'https://paystack.com/pay/YOUR_PRACTICAL_LINK',
-        project: 'https://paystack.com/pay/YOUR_PROJECT_LINK'
-      };
-      payBtn.href = links[s] || '#';
-    }
-
-    // 2) FORCE PAYMENT BEFORE WHATSAPP (client-side gate)
-    function markPaid(e) {
-      if (document.getElementById('payBtn').href === '#') {
-        e.preventDefault();
-        alert('Please select a service first.');
-        return;
-      }
-      localStorage.setItem('paidClicked', 'yes');
-      setTimeout(() => {
-        document.getElementById('confirmBtn').disabled = false;
-      }, 1000);
-    }
-
-    // 3) SEND WHATSAPP WITH PAYMENT REFERENCE
-    function sendToWhatsApp(e) {
+  function markPaid(e){
+    if(document.getElementById('payBtn').href==='#'){
       e.preventDefault();
-      if (localStorage.getItem('paidClicked') !== 'yes') {
-        alert('Please complete payment first.');
-        return;
-      }
-      const name = document.getElementById('name').value;
-      const contact = document.getElementById('contact').value;
-      const course = document.getElementById('course').value;
-      const type = document.getElementById('type').value;
-      const date = document.getElementById('date').value;
-      const ref = document.getElementById('reference').value;
-      const details = document.getElementById('details').value;
-      const phoneNumber = '233XXXXXXXXX'; // YOUR WhatsApp number
-      const msg = `Hello, I have PAID and want to confirm a booking.%0A%0A` +
-        `Name: ${name}%0AContact: ${contact}%0ACourse: ${course}%0A` +
-        `Assignment Type: ${type}%0APreferred Date: ${date}%0A` +
-        `Payment Reference: ${ref}%0A%0ADetails: ${details}`;
-      window.open(`https://wa.me/${phoneNumber}?text=${msg}`, '_blank');
+      alert('Please select a service first.');
+      return;
     }
-  </script>
+    localStorage.setItem('paidClicked','yes');
+    setTimeout(()=>{document.getElementById('confirmBtn').disabled=false;},500);
+  }
+
+  function sendToWhatsApp(e){
+    e.preventDefault();
+    if(localStorage.getItem('paidClicked')!=='yes'){
+      alert('Please complete payment first.');
+      return;
+    }
+    const name=document.getElementById('name').value;
+    const contact=document.getElementById('contact').value;
+    const course=document.getElementById('course').value;
+    const type=document.getElementById('type').value;
+    const date=document.getElementById('date').value;
+    const ref=document.getElementById('reference').value;
+    const details=document.getElementById('details').value;
+    const phoneNumber='233550520858';
+
+    const msg=`Hello, I have PAID and want to confirm a booking.%0A%0A`+
+              `Name: ${name}%0AContact: ${contact}%0ACourse: ${course}%0A`+
+              `Assignment Type: ${type}%0APreferred Date: ${date}%0A`+
+              `Payment Reference: ${ref}%0A%0ADetails: ${details}`;
+    window.open(`https://wa.me/${phoneNumber}?text=${msg}`,'_blank');
+  }
+</script>
+
 </body>
 </html>
