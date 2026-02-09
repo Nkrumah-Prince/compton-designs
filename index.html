@@ -3,168 +3,109 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Compton Designs | Graphic Designer</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <title>Study Help & Tutoring – Book an Appointment</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: #f4f6f8;
-      color: #222;
-      line-height: 1.6;
-    }
-    header {
-      background: linear-gradient(135deg, #000, #333);
-      color: #fff;
-      padding: 80px 20px;
-      text-align: center;
-    }
-    header h1 { font-size: 3rem; }
-    header p { font-size: 1.2rem; margin-top: 10px; }
-
-    nav {
-      background: #111;
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      padding: 15px;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
-    nav a {
-      color: #fff;
-      text-decoration: none;
-      font-weight: 500;
-    }
-    nav a:hover { color: #00ffd5; }
-
-    section {
-      padding: 60px 20px;
-      max-width: 1100px;
-      margin: auto;
-    }
-    h2 {
-      text-align: center;
-      margin-bottom: 40px;
-      font-size: 2.2rem;
-    }
-
-    .services, .portfolio {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 25px;
-    }
-
-    .card {
-      background: #fff;
-      padding: 25px;
-      border-radius: 15px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-      text-align: center;
-    }
-
-    .card img {
-      width: 100%;
-      border-radius: 10px;
-      margin-bottom: 15px;
-    }
-
-    .about {
-      text-align: center;
-      max-width: 800px;
-      margin: auto;
-    }
-
-    .contact {
-      text-align: center;
-    }
-
-    .btn {
-      display: inline-block;
-      margin-top: 15px;
-      padding: 12px 25px;
-      background: #000;
-      color: #fff;
-      border-radius: 30px;
-      text-decoration: none;
-    }
-    .btn:hover { background: #00ffd5; color: #000; }
-
-    footer {
-      background: #111;
-      color: #fff;
-      text-align: center;
-      padding: 25px;
-      margin-top: 50px;
-    }
-
-    @media (max-width: 600px) {
-      header h1 { font-size: 2.2rem; }
-    }
+    body { font-family: Arial, sans-serif; margin: 0; background: #f6f7fb; color: #222; }
+    header { background: #111; color: #fff; padding: 20px; text-align: center; }
+    main { max-width: 900px; margin: auto; padding: 20px; }
+    .card { background: #fff; border-radius: 10px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
+    h2 { margin-top: 0; }
+    .services { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; }
+    .service { border: 1px solid #ddd; border-radius: 8px; padding: 15px; }
+    .price { font-weight: bold; color: #0a7; }
+    label { display: block; margin-top: 10px; }
+    input, select, textarea, button { width: 100%; padding: 10px; margin-top: 5px; border-radius: 6px; border: 1px solid #ccc; }
+    button { background: #111; color: #fff; cursor: pointer; margin-top: 15px; }
+    button:hover { background: #333; }
+    footer { text-align: center; padding: 15px; font-size: 14px; color: #666; }
   </style>
 </head>
 <body>
+  <header>
+    <h1>Study Help & Assignment Support</h1>
+    <p>Guidance, tutoring & practical coaching</p>
+  </header>
 
-<header>
-  <h1>Compton Designs</h1>
-  <p>Creative Graphic Designer | Logos • Flyers • Branding</p>
-  <a href="#contact" class="btn">Hire Me</a>
-</header>
+  <main>
+    <div class="card">
+      <h2>Services & Pricing</h2>
+      <div class="services">
+        <div class="service">
+          <h3>Normal Assignment (Non-Practical)</h3>
+          <p>Concept explanation, structure, review & correction.</p>
+          <p class="price">GHS 20</p>
+        </div>
+        <div class="service">
+          <h3>Practical Assignment</h3>
+          <p>Hands-on guidance with tools, labs & demonstrations.</p>
+          <p class="price">GHS 25</p>
+        </div>
+        <div class="service">
+          <h3>Project / Coursework Coaching</h3>
+          <p>Long-term support until submission.</p>
+          <p class="price">From GHS 70</p>
+        </div>
+      </div>
+    </div>
 
-<nav>
-  <a href="#about">About</a>
-  <a href="#services">Services</a>
-  <a href="#portfolio">Portfolio</a>
-  <a href="#contact">Contact</a>
-</nav>
+    <div class="card">
+      <h2>Book an Appointment</h2>
+      <form onsubmit="sendToWhatsApp(event)">
+        <label>Full Name
+          <input type="text" id="name" required />
+        </label>
+        <label>Email or WhatsApp Number
+          <input type="text" id="contact" required />
+        </label>
+        <label>Course
+          <input type="text" id="course" required />
+        </label>
+        <label>Assignment Type
+          <select id="type" required>
+            <option value="">Select one</option>
+            <option>Normal (Non-Practical)</option>
+            <option>Practical</option>
+          </select>
+        </label>
+        <label>Preferred Date
+          <input type="date" id="date" required />
+        </label>
+        <label>Details
+          <textarea id="details" rows="4" required></textarea>
+        </label>
+        <button type="submit">Book via WhatsApp</button>
+      </form>
+    </div>
+  </main>
 
-<section id="about">
-  <h2>About Me</h2>
-  <div class="about">
-    <p>
-      I'm Compton, a passionate graphic designer based in Ghana. I help brands,
-      businesses, and individuals stand out through clean, modern, and
-      eye-catching designs. My goal is simple: make your brand look professional
-      and memorable.
-    </p>
-  </div>
-</section>
+  <footer>
+    <p>© 2026 Study Help Service • Guidance & Tutoring Only</p>
+  </footer>
 
-<section id="services">
-  <h2>My Services</h2>
-  <div class="services">
-    <div class="card">Logo Design</div>
-    <div class="card">Flyers & Posters</div>
-    <div class="card">Social Media Graphics</div>
-    <div class="card">Brand Identity</div>
-    <div class="card">Business Cards</div>
-    <div class="card">UI Graphics</div>
-  </div>
-</section>
+  <script>
+    function sendToWhatsApp(e) {
+      e.preventDefault();
 
-<section id="portfolio">
-  <h2>Portfolio</h2>
-  <div class="portfolio">
-    <div class="card"><img src="images/work1.jpg" alt="Design 1"><p>Logo Design</p></div>
-    <div class="card"><img src="images/work2.jpg" alt="Design 2"><p>Flyer Design</p></div>
-    <div class="card"><img src="images/work3.jpg" alt="Design 3"><p>Social Media Design</p></div>
-  </div>
-</section>
+      const name = document.getElementById('name').value;
+      const contact = document.getElementById('contact').value;
+      const course = document.getElementById('course').value;
+      const type = document.getElementById('type').value;
+      const date = document.getElementById('date').value;
+      const details = document.getElementById('details').value;
 
-<section id="contact">
-  <h2>Contact Me</h2>
-  <div class="contact">
-    <p>WhatsApp: +233550520858</p>
-    <p>Email: daddycompton123@gmail.com</p>
-    <p>Kumasi, Ghana</p>
-    <a href="https://wa.me/233550520858" class="btn">Chat on WhatsApp</a>
-  </div>
-</section>
+      const phoneNumber = '233550520858'; // replace with your WhatsApp number
 
-<footer>
-  <p>© 2026 Compton Designs. All Rights Reserved.</p>
-</footer>
+      const message = `Hello, I want to book an appointment.%0A%0A` +
+        `Name: ${name}%0A` +
+        `Contact: ${contact}%0A` +
+        `Course: ${course}%0A` +
+        `Assignment Type: ${type}%0A` +
+        `Preferred Date: ${date}%0A` +
+        `Details: ${details}`;
 
+      const url = `https://wa.me/${phoneNumber}?text=${message}`;
+      window.open(url, '_blank');
+    }
+  </script>
 </body>
 </html>
