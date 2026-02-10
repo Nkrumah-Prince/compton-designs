@@ -1,2 +1,2 @@
-# compton-designs
+# COMPTON-ASSIT
 My personal design portfolio website
